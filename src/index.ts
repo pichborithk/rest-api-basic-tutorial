@@ -3,7 +3,6 @@ import http from 'http';
 import cors from 'cors';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
-import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import * as dotenv from 'dotenv';
 dotenv.config();
