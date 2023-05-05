@@ -8,6 +8,8 @@ import mongoose from 'mongoose';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
+import router from './router';
+
 const app = express();
 
 app.use(
@@ -18,12 +20,12 @@ app.use(
 
 app.use(compression());
 app.use(cookieParser());
-app.use(bodyParser.json());
+app.use(express.json());
 
 const server = http.createServer(app);
 
 server.listen(8080, () => {
-  console.log('Server running on http://locahol:8080');
+  console.log('Server running on http://localhost:8080');
 });
 
 const MONGO_URL = process.env.MONGO_URL!;
@@ -31,3 +33,5 @@ const MONGO_URL = process.env.MONGO_URL!;
 mongoose.Promise = Promise;
 mongoose.connect(MONGO_URL);
 mongoose.connection.on('error', (error: Error) => console.log(error));
+
+app.use('/', router());

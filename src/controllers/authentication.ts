@@ -1,13 +1,15 @@
-import { createUser, getUserByEmail } from 'db/users';
 import { Request, Response } from 'express';
-import { authentication, random } from 'helpers';
+
+import { createUser, getUserByEmail } from '../db/users';
+import { authentication, random } from '../helpers';
 
 export const register = async (req: Request, res: Response) => {
   try {
     const { email, password, username } = req.body;
 
     if (!email || !password || !username) {
-      return res.sendStatus(400);
+      res.sendStatus(400);
+      return;
     }
 
     const existingUser = await getUserByEmail(email);
