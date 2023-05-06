@@ -30,3 +30,29 @@ export const isAuthenticated = async (
     return;
   }
 };
+
+export const isOwner = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+    const currentUserId: string = get(req, 'identity._id')!;
+    if (!currentUserId) {
+      res.sendStatus(403);
+      return;
+    }
+
+    if (currentUserId.toString() !== id) {
+      res.sendStatus(403);
+      return;
+    }
+
+    next();
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(400);
+    return;
+  }
+};
